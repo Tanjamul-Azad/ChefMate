@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recipe Results - ChefMate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 2rem;
+      color: #2d3748;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .header::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: #FF6B6B;
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #2d3748;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: #718096;
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .recipe-card {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2.5rem;
+      border-left: 4px solid #FF6B6B;
+      transition: transform 0.3s ease;
+    }
+
+    .recipe-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .recipe-card h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+      color: #2d3748;
+    }
+
+    .recipe-header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 1rem;
+    }
+
+    .recipe-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.8rem;
+      font-size: 0.95rem;
+      color: #718096;
+    }
+
+    .recipe-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .recipe-meta i {
+      color: #FF6B6B;
+    }
+
+    .score {
+      background-color: #FF6B6B;
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .section {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section h3 i {
+      color: #FF6B6B;
+    }
+
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    ul {
+      padding-left: 1.5rem;
+      list-style: none;
+    }
+
+    ul li {
+      margin-bottom: 0.7rem;
+      position: relative;
+    }
+
+    ul li:before {
+      content: '•';
+      color: #FF6B6B;
+      font-weight: bold;
+      position: absolute;
+      left: -1rem;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      text-decoration: none;
+      color: #FF6B6B;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .back:hover {
+      transform: translateX(-5px);
+    }
+
+    .print-btn {
+      background-color: #FF6B6B;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+    }
+
+    .print-btn:hover {
+      background-color: #FF5252;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .recipe-card {
+        padding: 1.5rem;
+      }
+
+      .ingredients-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .recipe-meta {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>ChefMate Recipe Finder</h1>
+      <p class="subtitle">Here are your personalized recipe recommendations</p>
+    </div>
+    
+    <div class="actions">
+      <button onclick="window.print()" class="print-btn">
+        <i class="fas fa-print"></i> Save as PDF
+      </button>
+    </div>
+
+    {% for result in results %}
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h2>{{ result.recipe }} <span class="score"><i class="fas fa-star"></i> {{ result.score }}% match</span></h2>
+        <div class="recipe-meta">
+          <span><i class="fas fa-globe"></i> {{ result.cuisine }}</span>
+          <span><i class="fas fa-utensils"></i> {{ result.meal_type }}</span>
+          <span><i class="fas fa-leaf"></i> {{ result.diet }}</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3><i class="fas fa-shopping-basket"></i> Ingredients Needed</h3>
+        <ul>
+          {% for item in result.ingredient_list %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3>Ingredients Analysis</h3>
+        <div class="ingredients-grid">
+          <div>
+            <h3 style="color: #48bb78;"><i class="fas fa-check-circle"></i> Matched</h3>
+            <p>{{ result.matched | join(', ') }}</p>
+          </div>
+          
+          <div>
+            <h3 style="color: #f56565;"><i class="fas fa-times-circle"></i> Missing</h3>
+            <p>{{ result.missing | join(', ') }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3><i class="fas fa-lightbulb"></i> Suggestions</h3>
+        <ul>
+          {% for s in result.suggestions %}
+            <li>{{ s }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3><i class="fas fa-list-ol"></i> Instructions</h3>
+        <p>{{ result.instructions }}</p>
+      </div>
+    </div>
+    {% endfor %}
+
+    <a class="back" href="/"><i class="fas fa-arrow-left"></i> Back to Home</a>
+  </div>
+</body>
+</html>
