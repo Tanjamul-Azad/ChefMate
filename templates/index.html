@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChefMate - Recipe Finder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f8f9fa;
+      color: #333;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .header::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: #FF6B6B;
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #2d3748;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: #718096;
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #4a5568;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    label i {
+      color: #FF6B6B;
+    }
+
+    input[type="text"],
+    select {
+      padding: 0.9rem 1rem;
+      font-size: 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      background-color: #f8fafc;
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #FF6B6B;
+      box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+    }
+
+    button {
+      background: #FF6B6B;
+      color: #fff;
+      border: none;
+      padding: 1rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    button:hover {
+      background: #FF5252;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+    }
+
+    .result {
+      margin-top: 3rem;
+    }
+
+    .card {
+      background: #fff;
+      padding: 1.8rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      margin-bottom: 2rem;
+      border-left: 4px solid #FF6B6B;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h2 {
+      margin-bottom: 0.8rem;
+      font-size: 1.4rem;
+      color: #2d3748;
+    }
+
+    .card ul {
+      padding-left: 1.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .card p {
+        margin-top: 0.8rem;
+        line-height: 1.7;
+        color: #4a5568;
+      }
+      
+      .result-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: #2d3748;
+        text-align: center;
+        position: relative;
+      }
+      
+      .recipe-header {
+        margin-bottom: 1.2rem;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 1rem;
+      }
+      
+      .recipe-meta {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: #718096;
+      }
+      
+      .recipe-meta span {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      
+      .recipe-meta i {
+        color: #FF6B6B;
+      }
+      
+      .ingredients-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .suggestions-section,
+      .instructions-section {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e2e8f0;
+      }
+      
+      h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      h3 i {
+        color: #FF6B6B;
+      }
+      
+      .ingredient-match h3 i {
+        color: #48bb78;
+      }
+      
+      .ingredient-missing h3 i {
+        color: #f56565;
+      }
+      
+      ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+        
+        .container {
+          padding: 1.5rem;
+        }
+        
+        h1 {
+          font-size: 2rem;
+        }
+        
+        .ingredients-section {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+      }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>What Can You Cook?</h1>
+      <p class="subtitle">Find delicious recipes with ingredients you have</p>
+    </div>
+    
+    <form action="/home" method="POST">
+      <div class="form-group">
+        <label for="ingredients"><i class="fas fa-carrot"></i> Ingredients (comma separated):</label>
+        <input type="text" name="ingredients" id="ingredients" placeholder="e.g. rice, tomato, chicken" autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="cuisine"><i class="fas fa-globe-americas"></i> Cuisine:</label>
+        <select name="cuisine" id="cuisine">
+          <option value="">Any Cuisine</option>
+          <option value="Bengali">Bengali</option>
+          <option value="Indian">Indian</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Western">Western</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="diet"><i class="fas fa-leaf"></i> Diet:</label>
+        <select name="diet" id="diet">
+          <option value="">Any Diet</option>
+          <option value="Vegetarian">Vegetarian</option>
+          <option value="Non-Vegetarian">Non-Vegetarian</option>
+          <option value="Vegan">Vegan</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="meal_type"><i class="fas fa-utensils"></i> Meal Type:</label>
+        <select name="meal_type" id="meal_type">
+          <option value="">Any Meal Type</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Dinner">Dinner</option>
+          <option value="Snack">Snack</option>
+          <option value="Dessert">Dessert</option>
+        </select>
+      </div>
+
+      <button type="submit"><i class="fas fa-search"></i> Find Recipes</button>
+    </form>
+
+    {% if results %}
+    <div class="result">
+      <h2 class="result-title">Recipe Recommendations</h2>
+      {% for recipe in results %}
+        <div class="card">
+          <div class="recipe-header">
+            <h2>{{ recipe.recipe }}</h2>
+            <div class="recipe-meta">
+              <span><i class="fas fa-globe"></i> {{ recipe.cuisine }}</span>
+              <span><i class="fas fa-utensils"></i> {{ recipe.meal_type }}</span>
+              <span><i class="fas fa-leaf"></i> {{ recipe.diet }}</span>
+            </div>
+          </div>
+          
+          <div class="ingredients-section">
+            <div class="ingredient-match">
+              <h3><i class="fas fa-check-circle"></i> Matched Ingredients</h3>
+              <p>{{ recipe.matched|join(", ") }}</p>
+            </div>
+            
+            <div class="ingredient-missing">
+              <h3><i class="fas fa-times-circle"></i> Missing Ingredients</h3>
+              <p>{{ recipe.missing|join(", ") }}</p>
+            </div>
+          </div>
+          
+          <div class="suggestions-section">
+            <h3><i class="fas fa-lightbulb"></i> Suggestions</h3>
+            <ul>
+              {% for s in recipe.suggestions %}
+              <li>{{ s }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          
+          <div class="instructions-section">
+            <h3><i class="fas fa-list-ol"></i> Instructions</h3>
+            <p>{{ recipe.instructions }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
